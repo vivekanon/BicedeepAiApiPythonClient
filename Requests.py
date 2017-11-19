@@ -4,8 +4,9 @@
 
 import requests
 
+# Authorization headers are valid for 24 hours.
 headers = {
-        "Authorization" : "Bearer 4j4PzSsSHz4KRJdjDJRt7SpL-Rj-E5tKhiLYmHnvBOW0RO8bshfjpTyt7Yz6urQ_EVp01hiA1mGUbYkzLDmRev2dKo6ud17NCWh8y7K2739V_VN3gxiqhkbLIusBTSNLDmQXza2xWHxvH-y1mfLxqQyl3EsNtY84qdIl5iT1M7IogwenWr3JHr1662gq-fUAu2sGrMUyui477lTS8SLzj-RYbYuGDLomrYVS3nivPvsmClBA7HQ90rb4TO7xeymkzdNZ5r0ZETu4P18dEKL3aiyhTmgNcMFbWpME7BJi3oo"
+        "Authorization" : "Bearer EiBjuyO-JPGLw_ZrKsZqhBSKRScOY00hN6hv14IY-0C9QeGWbAZkFTwgTuCBu0cPLWs_up4tkvJrEBFsIeYv7IUVjGM7g_23ZK_ql3YE7rOseSDqO8LCFCzslxzipzL1mHkZKIGEqJ6q6A1GkOcvwBxan_YsLAZWzg9vR6YhS3QjvQ0UrAR5LS2jLR1S85ceDv7sIcFOzFQIftsO35gvp3NUHrHF9g-FziyazRgblYTEgfyS4cUjwSpO49cpZJ-4jf0_tUcO4-4_b6RybRzJ8P8z_-Rs5tVrlbl7KysDaLQ"
     }
 
 baseUrl = "http://localhost:4509"
@@ -49,7 +50,7 @@ def requestReport():
     r = requests.post(url, json=body, headers=headers)
     print(r.content)
 
-#report values are empty if the report is not completed.
+#report values are empty if the report is not completed. You will get an email when the report is ready
 def getReport():
     url = baseUrl + '/api/reportapi/GetReport?filename=Adult_Tobacco_Consumption_In_The_U.S.__2000-Present_11.csv'
     r = requests.get(url, headers=headers)
@@ -75,16 +76,33 @@ def getQueryResult():
     r = requests.get(url, headers=headers)
     print(r.content)
 
+# You will get an email when the query file is filled
+def submitAQueryFile(filepath):
+    url = baseUrl + '/api/queryapi/SubmitAQueryFile?modelid=HR_comma_sep-11.csv.00001'
+    files = {'upload_file': open(filepath, 'rb')}
+    r = requests.post(url, files=files, headers=headers)
+    print(r.status_code)
+    print(r.content)
+
+# it gets the unchanged query file before the completion email,
+def downloadAQueryFile(filename):
+    url = baseUrl + '/api/queryapi/DownloadAQueryFile?filename=' + filename
+    r = requests.get(url, headers=headers)
+    f = open(filename, 'w')
+    f.write(r.text)
+    f.close()
+
 def main():
     #getAuthToken()
     #getFileList()
+    #uploadAFile('E:\Data\Adult_Tobacco_Consumption_In_The_U.S.__2000-Present_11.csv')
     #deleteAFile()
     #requestReport()
     #getReport()
     #createModel()
     #createQuery()
-    getQueryResult()
-    #uploadAFile('E:\Data\Adult_Tobacco_Consumption_In_The_U.S.__2000-Present_11.csv')
-
+    #getQueryResult()
+    #submitAQueryFile('E:\Data\human-resources-analytics\HR_comma_sep-11-queries1.csv')
+    #downloadAQueryFile('HR_comma_sep-11-queries1.csv')
 
 if  __name__ =='__main__':main()
