@@ -22,7 +22,7 @@ def getAuthToken(username, password):
         "username" : username,
         "password" : password
     }
-    resp = requests.get(url, data=body, headers=tokenHeaders)
+    resp = requests.post(url, data=body, headers=tokenHeaders)
     print(resp.content)
 
 def getFileList(nextpagetoken, prefix):
