@@ -36,6 +36,11 @@ def uploadAFile(filepath):
     r = requests.post(url, files=files, headers=headers)
     print(r.content)
 
+def TransferDataFile(sourceFilePath):
+    url = baseUrl + '/api/fileapi/TransferDataFile?sourceFilePath=' + sourceFilePath
+    r = requests.get(url, headers=headers)
+    print(r.content)
+
 def deleteAFile(filename):
     url = baseUrl + '/api/fileapi/DeleteAFile?filename=' + filename
     r = requests.get(url, headers=headers)
@@ -88,7 +93,8 @@ def main():
 
     #getAuthToken('', '')
     #getFileList('', '')
-    #uploadAFile('E:\Data\human-resources-analytics\HR_comma_sep-20.csv')
+    #uploadAFile('E:\Data\Parking_Violations_Issued_-_Fiscal_Year_2016_4GB.csv')
+    #TransferDataFile('datafiles/Adult_Tobacco_Consumption_In_The_U.S.__2000-Present_copied.csv')
     #deleteAFile('HR_comma_sep-20.csv')
 
     requestReportBody = {
