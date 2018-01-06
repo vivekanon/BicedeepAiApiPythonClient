@@ -36,8 +36,13 @@ def uploadAFile(filepath):
     r = requests.post(url, files=files, headers=headers)
     print(r.content)
 
-def TransferDataFile(sourceFilePath):
+def transferDataFile(sourceFilePath):
     url = baseUrl + '/api/fileapi/TransferDataFile?sourceFilePath=' + sourceFilePath
+    r = requests.get(url, headers=headers)
+    print(r.content)
+
+def renameFile(oldName, newName):
+    url = baseUrl + '/api/fileapi/RenameFile?oldFileName=' + oldName + '&newFileName=' + newName
     r = requests.get(url, headers=headers)
     print(r.content)
 
@@ -94,7 +99,8 @@ def main():
     #getAuthToken('', '')
     #getFileList('', '')
     #uploadAFile('E:\Data\Parking_Violations_Issued_-_Fiscal_Year_2016_4GB.csv')
-    #TransferDataFile('datafiles/Adult_Tobacco_Consumption_In_The_U.S.__2000-Present_copied.csv')
+    #transferDataFile('datafiles/Adult_Tobacco_Consumption_In_The_U.S.__2000-Present_copied.csv')
+    #renameFile('HR_comma_sep-26.csv', 'HR_comma_sep-30.csv')
     #deleteAFile('HR_comma_sep-20.csv')
 
     requestReportBody = {
