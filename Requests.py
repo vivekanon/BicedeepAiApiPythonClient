@@ -56,6 +56,11 @@ def requestReport(requestBody):
     r = requests.post(url, json=requestBody, headers=headers)
     print(r.content)
 
+def getStatus(filename):
+    url = baseUrl + '/api/reportapi/GetStatus?filename=' + filename
+    r = requests.get(url, headers=headers)
+    print(r.content)
+
 #report values are empty if the report is not completed. You will get an email when the report is ready
 def getReport(filename):
     url = baseUrl + '/api/reportapi/GetReport?filename=' + filename
@@ -109,6 +114,7 @@ def main():
     }
 
     #requestReport(requestReportBody)
+    getStatus('Digit Recognizer train 2.csv')
     #getReport("HR_comma_sep-20.csv")
     #createModel("HR_comma_sep-20.csv.00003")
 
