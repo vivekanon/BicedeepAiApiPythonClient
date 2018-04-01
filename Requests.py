@@ -36,6 +36,24 @@ def uploadAFile(filepath):
     r = requests.post(url, files=files, headers=headers)
     print(r.content)
 
+#docker only method, not available on live API
+def downloadAFile(filename):
+    url = baseUrl + '/api/fileapi/DownloadAFile?filename=' + filename
+    r = requests.get(url, headers=headers)
+    if r.status_code == 200:
+        f = open(filename, 'w')
+        f.write(r.text)
+        f.close()
+
+#docker only method, not available on live API
+def downloadModelFile(modelFileName):
+    url = baseUrl + '/api/fileapi/DownloadModelFile?modelFileName=' + modelFileName
+    r = requests.get(url, headers=headers)
+    if r.status_code == 200:
+        f = open(modelFileName, 'wb')
+        f.write(r.content)
+        f.close()
+
 def transferDataFile(sourceFilePath):
     url = baseUrl + '/api/fileapi/TransferDataFile?sourceFilePath=' + sourceFilePath
     r = requests.get(url, headers=headers)
@@ -99,38 +117,51 @@ def downloadAQueryFile(filename):
         f.write(r.text)
         f.close()
 
-def main():
 
+def main():
+    # only at live api not docker
     #getAuthToken('', '')
+
     #getFileList('', '')
-    #uploadAFile('E:\Data\Parking_Violations_Issued_-_Fiscal_Year_2016_4GB.csv')
+    #uploadAFile('C:/Users/Downloads/Iris-try1.csv')
+
+    # only at docker not live api
+    #downloadAFile('Iris-try1.csv')
+
+    # only at docker not live api
+    #downloadModelFile('Iris-try1.csv.00001.h5')
+
+    # only at docker not live api
+    #downloadModelFile('Iris-try1.csv.00001.h5.json')
+
+    # only at live api not docker
     #transferDataFile('datafiles/Adult_Tobacco_Consumption_In_The_U.S.__2000-Present_copied.csv')
-    #renameFile('HR_comma_sep-26.csv', 'HR_comma_sep-30.csv')
-    #deleteAFile('HR_comma_sep-20.csv')
+
+    #renameFile('Iris-try1.csv', 'Iris-try2.csv')
+    #deleteAFile('Iris-try2.csv')
 
     requestReportBody = {
-        "fileName": "HR_comma_sep-20.csv",
-        "selectedHeaders": ["last_evaluation", "sales", "left"]
+        "fileName": "Iris-try1.csv",
+        "selectedHeaders": ["Species"]
     }
 
     #requestReport(requestReportBody)
-    getStatus('Digit Recognizer train 2.csv')
-    #getReport("HR_comma_sep-20.csv")
+    #getStatus('Iris-try1(1).csv')
+    #getReport('Iris-try1.csv')
+
+    #only at live api not docker
     #createModel("HR_comma_sep-20.csv.00003")
 
 
-    createQueryBody = {"queried_part": "left",
-                       "result_type": "number",
-                       "query_using": [{"part": "satisfaction_level", "value": "0.4"},
-                                       {"part": "last_evaluation", "value": "6"},
-                                       {"part": "number_project", "value": "3"},
-                                       {"part": "time_spend_company", "value": "2"},
-                                       {"part": "promotion_last_5years", "value": "0"},
-                                       {"part": "sales", "value": "sales"}]}
+    createQueryBody = {"queried_part": "Species",
+                       "result_type": "string",
+                       "query_using": [{"part": "SepalLengthCm", "value": "5.4"},
+                                       {"part": "PetalLengthCm", "value": "0.6"},
+                                       {"part": "PetalWidthCm", "value": "0.2"}]}
 
-    #createQuery("HR_comma_sep-20.csv.00003", createQueryBody)
-    #getQueryResult("HR_comma_sep-20.csv.00003.000001")
-    #submitAQueryFile('E:\Data\human-resources-analytics\HR_comma_sep-20-queries4.csv', "HR_comma_sep-20.csv.00003")
-    #downloadAQueryFile('HR_comma_sep-20-queries2.csv')
+    #createQuery("Iris-try1.csv.00001", createQueryBody)
+    #getQueryResult("Iris-try1.csv.00001.000002")
+    #submitAQueryFile('C:/Users/Downloads/Iris-try1-q2.csv', "Iris-try1.csv.00001")
+    #downloadAQueryFile('Iris-try1-q2.csv')
 
 if  __name__ =='__main__':main()
