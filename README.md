@@ -2,20 +2,17 @@ BicedeepAiApiPythonClient
 
 Function List:
 
-# only at live api not docker
---> Get Auth Token,
+--> Get Auth Token (only at live api not docker),
 
 --> Get File List,
 --> Upload A File,
 
-# only at docker not live api
---> Download A File
+--> Download A File (only at docker not live api),
 
-# only at docker not live api
---> Download Model File
+--> Download Model File (only at docker not live api),
 
-# only at live api not docker
---> Transfer Data File,
+
+--> Transfer Data File (only at live api not docker),
 
 --> Rename File,
 --> Delete A File,
@@ -23,8 +20,7 @@ Function List:
 --> Get Status,
 --> Get Report,
 
-# only at live api not docker
---> Create Model,
+--> Create Model (only at live api not docker),
 
 --> Create Query,
 --> Get Query Result,
